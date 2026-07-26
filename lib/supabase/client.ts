@@ -27,3 +27,14 @@ export type Materi = {
   urutan: number
   created_at: string
 }
+export type Soal = {
+  id: string
+  kelas: 4 | 5 | 6
+  pertanyaan: string
+  pilihan_a: string
+  pilihan_b: string
+  pilihan_c: string
+  pilihan_d: string
+  jawaban_benar: "a" | "b" | "c" | "d"
+  urutan: number
+}
