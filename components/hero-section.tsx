@@ -39,7 +39,7 @@ export function HeroSection() {
           </div>
 
           <div>
-            <div className="rounded-3xl border border-[#eef2f7] bg-card p-6 shadow-2xl shadow-slate-900/10">
+            <div className="animate-float rounded-3xl border border-[#eef2f7] bg-card p-6 shadow-2xl shadow-slate-900/10">
               <img
                 src={HERO_IMAGE || "/placeholder.svg"}
                 alt="Ilustrasi dua siswa SD sedang belajar TIK dengan laptop"
