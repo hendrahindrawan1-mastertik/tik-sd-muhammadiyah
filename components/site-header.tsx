@@ -3,7 +3,7 @@ import { UserRound } from "lucide-react"
 const navItems = [
   { label: "Beranda", href: "#beranda", active: true },
   { label: "Materi", href: "#materi" },
-  { label: "Video", href: "#video" },
+  { label: "Video", href: "/video" },
   { label: "Soal", href: "#soal" },
   { label: "Game", href: "#game" },
   { label: "Info", href: "#info" },
