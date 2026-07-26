@@ -1,7 +1,6 @@
 import { BookOpen, Play } from "lucide-react"
 
-const HERO_IMAGE =
-  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%2024%20Jul%202026%2C%2023.50.55-xg2Tqt1MryvfaDoBSRv7BkLMaFM5gO.png"
+const HERO_IMAGE = "/images/hero-ilustrasi.jpg"
 
 export function HeroSection() {
   return (
