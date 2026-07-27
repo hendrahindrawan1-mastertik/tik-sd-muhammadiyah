@@ -8,7 +8,7 @@ const navItems = [
   { label: "Materi", href: "#materi" },
   { label: "Video", href: "/video" },
   { label: "Soal", href: "/soal" },
-  { label: "Game", href: "#game" },
+  { label: "Game", href: "/game" },
   { label: "Info", href: "#info" },
   { label: "Untuk Guru", href: "/guru/rekap-absensi" },
 ]
