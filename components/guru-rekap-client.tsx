@@ -109,23 +109,31 @@ export function GuruRekapClient() {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center gap-4">
-        <label className="flex items-center gap-2 text-sm font-semibold">
-          <CalendarDays className="h-4 w-4 text-brand-blue" />
-          Tanggal
-        </label>
-        <input
-          type="date"
-          value={tanggal}
-          onChange={(e) => handleGantiTanggal(e.target.value)}
-          className="rounded-xl border border-border px-4 py-2 text-sm outline-none focus:border-brand-blue"
-        />
-        {totalSiswa !== null && (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#eefbf1] px-3 py-1.5 text-sm font-semibold text-brand-green">
-            <Users className="h-4 w-4" />
-            {rekap.length} dari {totalSiswa} siswa hadir
-          </span>
-        )}
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <label className="flex items-center gap-2 text-sm font-semibold">
+            <CalendarDays className="h-4 w-4 text-brand-blue" />
+            Tanggal
+          </label>
+          <input
+            type="date"
+            value={tanggal}
+            onChange={(e) => handleGantiTanggal(e.target.value)}
+            className="rounded-xl border border-border px-4 py-2 text-sm outline-none focus:border-brand-blue"
+          />
+          {totalSiswa !== null && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#eefbf1] px-3 py-1.5 text-sm font-semibold text-brand-green">
+              <Users className="h-4 w-4" />
+              {rekap.length} dari {totalSiswa} siswa hadir
+            </span>
+          )}
+        </div>
+        <a
+          href="/guru/kelola-ulasan"
+          className="text-sm font-semibold text-brand-blue hover:underline"
+        >
+          Kelola Ulasan Pengunjung &rarr;
+        </a>
       </div>
 
       {memuatRekap ? (
