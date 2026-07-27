@@ -1,4 +1,4 @@
-import { BookOpen, Play } from "lucide-react"
+import { BookOpen, Play, ClipboardCheck } from "lucide-react"
 
 const HERO_IMAGE = "/images/hero-ilustrasi.jpg"
 
@@ -12,7 +12,7 @@ export function HeroSection() {
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>
             <p className="mb-3.5 text-lg text-brand-muted text-pretty">
-              Selamat Datang di SD Muhammadiyah 01 Kukusan 👋
+              Selamat Datang di TIK SD Muhammadiyah 01 Kukusan 👋
             </p>
             <h2 className="mb-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-balance lg:text-6xl">
               Belajar TIK
@@ -33,6 +33,12 @@ export function HeroSection() {
                 <button className="inline-flex items-center gap-2 rounded-xl border-[1.5px] border-[#dbe3f4] bg-card px-6 py-3.5 text-base font-semibold text-brand-blue transition-transform hover:-translate-y-0.5">
                   <Play className="h-[18px] w-[18px] fill-current" />
                   Lihat Video
+                </button>
+              </a>
+              <a href="/absen">
+                <button className="inline-flex items-center gap-2 rounded-xl bg-brand-green px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-green/25 transition-transform hover:-translate-y-0.5 hover:brightness-95">
+                  <ClipboardCheck className="h-[18px] w-[18px]" />
+                  Absen Sekarang
                 </button>
               </a>
             </div>
