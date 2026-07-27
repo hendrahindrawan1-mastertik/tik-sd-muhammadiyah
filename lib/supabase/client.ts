@@ -42,7 +42,7 @@ export type Siswa = {
   id: string
   nisn: string
   nama: string
-  kelas: 4 | 5 | 6
+  kelas: string
   foto_url: string | null
   created_at: string
 }

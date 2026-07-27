@@ -10,7 +10,7 @@ const navItems = [
   { label: "Soal", href: "/soal" },
   { label: "Game", href: "#game" },
   { label: "Info", href: "#info" },
-  { label: "Untuk Guru", href: "#guru" },
+  { label: "Untuk Guru", href: "/guru/rekap-absensi" },
 ]
 
 export function SiteHeader() {
