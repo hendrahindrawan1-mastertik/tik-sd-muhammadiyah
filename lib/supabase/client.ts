@@ -46,3 +46,14 @@ export type Siswa = {
   foto_url: string | null
   created_at: string
 }
+export type Tugas = {
+  id: string
+  kelas: 4 | 5 | 6
+  judul: string
+  deskripsi: string | null
+  pdf_url: string | null
+  link_url: string | null
+  tenggat: string | null
+  urutan: number
+  created_at: string
+}

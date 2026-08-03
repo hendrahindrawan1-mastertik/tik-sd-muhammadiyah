@@ -128,12 +128,20 @@ export function GuruRekapClient() {
             </span>
           )}
         </div>
-        <a
-          href="/guru/kelola-ulasan"
-          className="text-sm font-semibold text-brand-blue hover:underline"
-        >
-          Kelola Ulasan Pengunjung &rarr;
-        </a>
+          <div className="flex flex-wrap gap-4">
+          <a
+            href="/guru/kelola-tugas"
+            className="text-sm font-semibold text-brand-blue hover:underline"
+          >
+            Kelola Tugas &rarr;
+          </a>
+          <a
+            href="/guru/kelola-ulasan"
+            className="text-sm font-semibold text-brand-blue hover:underline"
+          >
+            Kelola Ulasan Pengunjung &rarr;
+          </a>
+        </div>
       </div>
 
       {memuatRekap ? (

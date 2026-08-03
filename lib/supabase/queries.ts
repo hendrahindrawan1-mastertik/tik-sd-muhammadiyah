@@ -1,5 +1,4 @@
-import { supabase, type Materi, type Soal } from "./client"
-
+import { supabase, type Materi, type Soal, type Tugas } from "./client"
 export async function getMateriByKelas(kelas: 4 | 5 | 6): Promise<Materi[]> {
   const { data, error } = await supabase
     .from("materi")
@@ -38,6 +37,20 @@ export async function getSoalByKelas(kelas: 4 | 5 | 6): Promise<Soal[]> {
 
   if (error) {
     console.error("Gagal mengambil soal:", error.message)
+    return []
+  }
+
+  return data ?? []
+}
+export async function getTugasByKelas(kelas: 4 | 5 | 6): Promise<Tugas[]> {
+  const { data, error } = await supabase
+    .from("tugas")
+    .select("*")
+    .eq("kelas", kelas)
+    .order("urutan", { ascending: true })
+
+  if (error) {
+    console.error("Gagal mengambil tugas:", error.message)
     return []
   }
 
