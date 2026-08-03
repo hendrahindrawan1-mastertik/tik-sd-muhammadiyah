@@ -11,7 +11,7 @@ export function HeroSection() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-10 md:grid-cols-2">
           <div>
-            <p className="mb-3.5 text-lg text-brand-muted text-pretty">
+            <p className="mb-3.5 text-lg text-brand-muted text-pretty text-shine">
               Selamat Datang di SD Muhammadiyah 01 Kukusan 👋
             </p>
             <h2 className="mb-5 text-5xl font-extrabold leading-[1.05] tracking-tight text-balance lg:text-6xl">
