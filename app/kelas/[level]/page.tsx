@@ -1,15 +1,15 @@
 import { notFound } from "next/navigation"
-import { ArrowLeft, PlayCircle } from "lucide-react"
+import { ArrowLeft, PlayCircle, Download } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { getMateriByKelas } from "@/lib/supabase/queries"
 
 const VALID_LEVELS = [4, 5, 6] as const
 
-const THEME: Record<number, { bg: string; border: string; title: string }> = {
-  4: { bg: "bg-[#eef4ff]", border: "border-[#dbe6ff]", title: "text-brand-blue" },
-  5: { bg: "bg-[#eefbf1]", border: "border-[#d5f0dd]", title: "text-brand-green" },
-  6: { bg: "bg-[#f4eefe]", border: "border-[#e6d9fb]", title: "text-brand-purple" },
+const THEME: Record<number, { bg: string; border: string; title: string; button: string }> = {
+  4: { bg: "bg-[#eef4ff]", border: "border-[#dbe6ff]", title: "text-brand-blue", button: "bg-brand-blue hover:bg-brand-blue-dark" },
+  5: { bg: "bg-[#eefbf1]", border: "border-[#d5f0dd]", title: "text-brand-green", button: "bg-brand-green hover:brightness-95" },
+  6: { bg: "bg-[#f4eefe]", border: "border-[#e6d9fb]", title: "text-brand-purple", button: "bg-brand-purple hover:brightness-95" },
 }
 
 function toEmbedUrl(url: string) {
@@ -56,9 +56,22 @@ export default async function KelasPage({
           Kembali ke Beranda
         </a>
 
-        <h2 className={`mb-8 text-3xl font-extrabold ${theme.title}`}>
+        <h2 className={`mb-4 text-3xl font-extrabold ${theme.title}`}>
           Materi TIK Kelas {kelasNumber}
         </h2>
+
+        <div className={`mb-8 flex flex-col items-start gap-3 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between ${theme.bg} ${theme.border}`}>
+          <div>
+            <h5 className="text-base font-bold">📄 Modul Belajar Kelas {kelasNumber} (PDF)</h5>
+            <p className="text-sm text-brand-muted">Download modul untuk membantu belajar di rumah.</p>
+          </div>
+          <a href={`/modul/modul-kelas-${kelasNumber}.pdf`} download className="w-full sm:w-auto">
+            <button className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 sm:w-auto ${theme.button}`}>
+              Download PDF
+              <Download className="h-4 w-4" />
+            </button>
+          </a>
+        </div>
 
         {materi.length === 0 ? (
           <p className="text-brand-muted">
