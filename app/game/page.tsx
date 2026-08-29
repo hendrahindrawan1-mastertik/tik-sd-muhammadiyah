@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft, ArrowRight, ImageIcon } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -41,6 +41,31 @@ export default function GamePage() {
               </a>
             </div>
           ))}
+        </div>
+
+        <div className="mt-10 flex flex-col items-start gap-3 rounded-3xl border border-[#e6d9fb] bg-gradient-to-br from-[#f4eefe] to-white p-7 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-purple/10 text-brand-purple">
+              <ImageIcon className="h-7 w-7" />
+            </div>
+            <div>
+              <h3 className="text-xl font-extrabold text-brand-purple">Kuis Tebak Gambar</h3>
+              <p className="mt-1 text-sm text-brand-muted">
+                Yuk uji kemampuanmu dengan bermain kuis tebak gambar seru berikut ini!
+              </p>
+            </div>
+          </div>
+          <a
+            href="https://hendras.my.canva.site/tebak-gambar"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full shrink-0 md:w-auto"
+          >
+            <button className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-purple px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:brightness-95 md:w-auto">
+              Main Sekarang
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </a>
         </div>
       </main>
       <SiteFooter />
