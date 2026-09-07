@@ -1,35 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { LogIn, CalendarDays, Users } from "lucide-react"
+import { LogIn, ListChecks, Trophy } from "lucide-react"
 import { supabase } from "@/lib/supabase/client"
 
-type BarisRekap = {
-  nama: string
-  kelas: string
-  nisn: string
-  jam: string
+type BarisHasil = {
+  nama_siswa: string
+  kelas: number
+  skor: number
+  total_soal: number
+  created_at: string
 }
 
-function tanggalHariIni() {
-  const d = new Date()
-  const yyyy = d.getFullYear()
-  const mm = String(d.getMonth() + 1).padStart(2, "0")
-  const dd = String(d.getDate()).padStart(2, "0")
-  return `${yyyy}-${mm}-${dd}`
-}
-
-export function GuruRekapClient() {
+export function GuruRekapKuisClient() {
   const [masuk, setMasuk] = useState(false)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const [tanggal, setTanggal] = useState(tanggalHariIni())
-  const [rekap, setRekap] = useState<BarisRekap[]>([])
-  const [totalSiswa, setTotalSiswa] = useState<number | null>(null)
-  const [memuatRekap, setMemuatRekap] = useState(false)
+  const [filterKelas, setFilterKelas] = useState<"" | "4" | "5" | "6">("")
+  const [hasil, setHasil] = useState<BarisHasil[]>([])
+  const [memuat, setMemuat] = useState(false)
 
   const handleLogin = async () => {
     setError(null)
@@ -46,29 +38,26 @@ export function GuruRekapClient() {
     }
 
     setMasuk(true)
-    muatRekap(tanggal)
+    muatHasil("")
   }
 
-  const muatRekap = async (tgl: string) => {
-    setMemuatRekap(true)
-    const [{ data: rekapData, error: rekapError }, { count }] = await Promise.all([
-      supabase.rpc("rekap_absensi_tanggal", { tgl }),
-      supabase.from("siswa").select("*", { count: "exact", head: true }),
-    ])
-    setMemuatRekap(false)
+  const muatHasil = async (kelas: "" | "4" | "5" | "6") => {
+    setMemuat(true)
+    const { data, error: rekapError } = await supabase.rpc("rekap_hasil_kuis", {
+      filter_kelas: kelas === "" ? null : Number(kelas),
+    })
+    setMemuat(false)
 
     if (rekapError) {
       setError("Gagal memuat rekap: " + rekapError.message)
       return
     }
-
-    setRekap(rekapData ?? [])
-    setTotalSiswa(count ?? null)
+    setHasil(data ?? [])
   }
 
-  const handleGantiTanggal = (tgl: string) => {
-    setTanggal(tgl)
-    muatRekap(tgl)
+  const handleGantiFilter = (kelas: "" | "4" | "5" | "6") => {
+    setFilterKelas(kelas)
+    muatHasil(kelas)
   }
 
   if (!masuk) {
@@ -107,73 +96,81 @@ export function GuruRekapClient() {
     )
   }
 
+  const rataRata =
+    hasil.length > 0
+      ? Math.round(
+          (hasil.reduce((acc, h) => acc + (h.skor / h.total_soal) * 100, 0) / hasil.length) * 10
+        ) / 10
+      : null
+
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <label className="flex items-center gap-2 text-sm font-semibold">
-            <CalendarDays className="h-4 w-4 text-brand-blue" />
-            Tanggal
+            <ListChecks className="h-4 w-4 text-brand-blue" />
+            Filter Kelas
           </label>
-          <input
-            type="date"
-            value={tanggal}
-            onChange={(e) => handleGantiTanggal(e.target.value)}
+          <select
+            value={filterKelas}
+            onChange={(e) => handleGantiFilter(e.target.value as "" | "4" | "5" | "6")}
             className="rounded-xl border border-border px-4 py-2 text-sm outline-none focus:border-brand-blue"
-          />
-          {totalSiswa !== null && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#eefbf1] px-3 py-1.5 text-sm font-semibold text-brand-green">
-              <Users className="h-4 w-4" />
-              {rekap.length} dari {totalSiswa} siswa hadir
+          >
+            <option value="">Semua Kelas</option>
+            <option value="4">Kelas 4</option>
+            <option value="5">Kelas 5</option>
+            <option value="6">Kelas 6</option>
+          </select>
+          {rataRata !== null && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#fff7df] px-3 py-1.5 text-sm font-semibold text-[#a3760a]">
+              <Trophy className="h-4 w-4" />
+              Rata-rata: {rataRata}%
             </span>
           )}
         </div>
-          <div className="flex flex-wrap gap-4">
-          <a
-            href="/guru/rekap-kuis"
-            className="text-sm font-semibold text-brand-blue hover:underline"
-          >
-            Rekap Hasil Kuis &rarr;
+        <div className="flex flex-wrap gap-4">
+          <a href="/guru/rekap-absensi" className="text-sm font-semibold text-brand-blue hover:underline">
+            Rekap Absensi &rarr;
           </a>
-          <a
-            href="/guru/kelola-tugas"
-            className="text-sm font-semibold text-brand-blue hover:underline"
-          >
+          <a href="/guru/kelola-tugas" className="text-sm font-semibold text-brand-blue hover:underline">
             Kelola Tugas &rarr;
-          </a>
-          <a
-            href="/guru/kelola-ulasan"
-            className="text-sm font-semibold text-brand-blue hover:underline"
-          >
-            Kelola Ulasan Pengunjung &rarr;
           </a>
         </div>
       </div>
 
-      {memuatRekap ? (
+      {memuat ? (
         <p className="text-brand-muted">Memuat data...</p>
-      ) : rekap.length === 0 ? (
-        <p className="text-brand-muted">Belum ada siswa yang absen pada tanggal ini.</p>
+      ) : hasil.length === 0 ? (
+        <p className="text-brand-muted">Belum ada siswa yang mengerjakan kuis.</p>
       ) : (
         <div className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50">
               <tr>
-                <th className="px-4 py-3 font-semibold">Nama</th>
+                <th className="px-4 py-3 font-semibold">Nama Siswa</th>
                 <th className="px-4 py-3 font-semibold">Kelas</th>
-                <th className="px-4 py-3 font-semibold">NISN</th>
-                <th className="px-4 py-3 font-semibold">Jam Absen</th>
+                <th className="px-4 py-3 font-semibold">Skor</th>
+                <th className="px-4 py-3 font-semibold">Nilai</th>
+                <th className="px-4 py-3 font-semibold">Waktu Mengerjakan</th>
               </tr>
             </thead>
             <tbody>
-              {rekap.map((r, i) => (
-                <tr key={i} className="border-t border-border">
-                  <td className="px-4 py-3">{r.nama}</td>
-                  <td className="px-4 py-3">{r.kelas}</td>
-                  <td className="px-4 py-3">{r.nisn}</td>
-                  <td className="px-4 py-3">{new Date(r.jam).toLocaleTimeString("id-ID")}</td>
-                </tr>
-              ))}
+              {hasil.map((h, i) => {
+                const nilai = Math.round((h.skor / h.total_soal) * 100)
+                return (
+                  <tr key={i} className="border-t border-border">
+                    <td className="px-4 py-3">{h.nama_siswa}</td>
+                    <td className="px-4 py-3">{h.kelas}</td>
+                    <td className="px-4 py-3">
+                      {h.skor} / {h.total_soal}
+                    </td>
+                    <td className="px-4 py-3 font-semibold">{nilai}</td>
+                    <td className="px-4 py-3">
+                      {new Date(h.created_at).toLocaleString("id-ID")}
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
