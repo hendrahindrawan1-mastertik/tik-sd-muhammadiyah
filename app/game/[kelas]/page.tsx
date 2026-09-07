@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { GameClient } from "@/components/game-client"
-import { getSoalByKelas } from "@/lib/supabase/queries"
+import { getSoalGameByKelas } from "@/lib/supabase/queries"
 
 const VALID_LEVELS = [4, 5, 6] as const
 
@@ -19,7 +19,7 @@ export default async function GameKelasPage({
     notFound()
   }
 
-  const soalList = await getSoalByKelas(kelasNumber as 4 | 5 | 6)
+  const soalList = await getSoalGameByKelas(kelasNumber as 4 | 5 | 6)
 
   return (
     <div className="min-h-screen bg-background text-brand-ink">

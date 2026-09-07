@@ -42,6 +42,20 @@ export async function getSoalByKelas(kelas: 4 | 5 | 6): Promise<Soal[]> {
 
   return data ?? []
 }
+export async function getSoalGameByKelas(kelas: 4 | 5 | 6): Promise<Soal[]> {
+  const { data, error } = await supabase
+    .from("soal_game")
+    .select("*")
+    .eq("kelas", kelas)
+    .order("urutan", { ascending: true })
+
+  if (error) {
+    console.error("Gagal mengambil soal game:", error.message)
+    return []
+  }
+
+  return data ?? []
+}
 export async function getTugasByKelas(kelas: 4 | 5 | 6): Promise<Tugas[]> {
   const { data, error } = await supabase
     .from("tugas")
