@@ -8,7 +8,7 @@ const kelasList = [
   { level: 6, cardClass: "bg-[#f4eefe] border-[#e6d9fb]", titleClass: "text-brand-purple", buttonClass: "bg-brand-purple hover:brightness-95" },
 ]
 
-export default function GamePage() {
+export default function UTSPage() {
   return (
     <div className="min-h-screen bg-background text-brand-ink">
       <SiteHeader />
@@ -21,9 +21,13 @@ export default function GamePage() {
           Kembali ke Beranda
         </a>
 
-        <h2 className="mb-8 text-3xl font-extrabold text-brand-purple">
-          Pilih Kelas untuk Main Game
+        <h2 className="mb-2 text-3xl font-extrabold text-brand-blue">
+          Ujian Tengah Semester (UTS)
         </h2>
+        <p className="mb-8 text-brand-muted">
+          Pilih kelasmu, lalu login dengan NISN untuk mengerjakan UTS. Setiap siswa hanya
+          bisa mengerjakan satu kali.
+        </p>
 
         <div className="grid gap-6 md:grid-cols-3">
           {kelasList.map((item) => (
@@ -32,10 +36,10 @@ export default function GamePage() {
               className={`flex flex-col items-start gap-3 rounded-3xl border p-7 ${item.cardClass}`}
             >
               <h3 className={`text-2xl font-extrabold ${item.titleClass}`}>Kelas {item.level}</h3>
-              <p className="text-sm text-brand-muted">Kuis cepat, seru-seruan</p>
-              <a href={`/game/${item.level}`}>
+              <p className="text-sm text-brand-muted">Pilihan ganda, dinilai otomatis</p>
+              <a href={`/uts/${item.level}`}>
                 <button className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 ${item.buttonClass}`}>
-                  Main Sekarang
+                  Mulai UTS
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </a>

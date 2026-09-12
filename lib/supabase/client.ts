@@ -57,3 +57,25 @@ export type Tugas = {
   urutan: number
   created_at: string
 }
+export type SoalUTS = {
+  id: string
+  kelas: 4 | 5 | 6
+  nomor: number
+  pertanyaan: string
+  pilihan_a: string
+  pilihan_b: string
+  pilihan_c: string
+  pilihan_d: string
+  jawaban_benar: "a" | "b" | "c" | "d"
+  created_at: string
+}
+export type HasilUTS = {
+  id: string
+  siswa_id: string
+  nama_siswa: string
+  nisn: string
+  kelas: 4 | 5 | 6
+  skor: number
+  total_soal: number
+  created_at: string
+}

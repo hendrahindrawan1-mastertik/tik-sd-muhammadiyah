@@ -9,6 +9,7 @@ const navItems = [
   { label: "Tugas", href: "/tugas" },
   { label: "Video", href: "/video" },
   { label: "Soal", href: "/soal" },
+  { label: "UTS", href: "/uts" },
   { label: "Game", href: "/game" },
   { label: "Info", href: "#info" },
   { label: "Untuk Guru", href: "/guru/rekap-absensi" },

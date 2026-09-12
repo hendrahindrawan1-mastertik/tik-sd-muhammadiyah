@@ -6,7 +6,6 @@ import type { Soal } from "@/lib/supabase/client"
 
 const OPTION_LABELS: Array<"a" | "b" | "c" | "d"> = ["a", "b", "c", "d"]
 const DETIK_PER_SOAL = 15
-const JUMLAH_SOAL_GAME = 10
 
 function acakSoal(soalList: Soal[], jumlah: number) {
   const disalin = [...soalList]
@@ -35,7 +34,7 @@ export function GameClient({ soalList }: { soalList: Soal[] }) {
   const [dipilih, setDipilih] = useState<"a" | "b" | "c" | "d" | null>(null)
 
   const mulai = () => {
-    setSoalAcak(acakSoal(soalList, Math.min(JUMLAH_SOAL_GAME, soalList.length)))
+    setSoalAcak(acakSoal(soalList, Math.min(5, soalList.length)))
     setNomor(0)
     setSkor(0)
     setWaktu(DETIK_PER_SOAL)
@@ -86,7 +85,7 @@ export function GameClient({ soalList }: { soalList: Soal[] }) {
         <Zap className="mx-auto mb-3 h-10 w-10 text-brand-purple" />
         <h2 className="mb-2 text-xl font-bold">Kuis Cepat</h2>
         <p className="mb-5 text-sm text-brand-muted">
-          {Math.min(JUMLAH_SOAL_GAME, soalList.length)} soal, {DETIK_PER_SOAL} detik per soal. Jawab secepat mungkin!
+          {Math.min(5, soalList.length)} soal, {DETIK_PER_SOAL} detik per soal. Jawab secepat mungkin!
         </p>
         <button
           onClick={mulai}

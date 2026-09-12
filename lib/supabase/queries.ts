@@ -1,4 +1,4 @@
-import { supabase, type Materi, type Soal, type Tugas } from "./client"
+import { supabase, type Materi, type Soal, type Tugas, type SoalUTS, type HasilUTS } from "./client"
 export async function getMateriByKelas(kelas: 4 | 5 | 6): Promise<Materi[]> {
   const { data, error } = await supabase
     .from("materi")
@@ -42,20 +42,6 @@ export async function getSoalByKelas(kelas: 4 | 5 | 6): Promise<Soal[]> {
 
   return data ?? []
 }
-export async function getSoalGameByKelas(kelas: 4 | 5 | 6): Promise<Soal[]> {
-  const { data, error } = await supabase
-    .from("soal_game")
-    .select("*")
-    .eq("kelas", kelas)
-    .order("urutan", { ascending: true })
-
-  if (error) {
-    console.error("Gagal mengambil soal game:", error.message)
-    return []
-  }
-
-  return data ?? []
-}
 export async function getTugasByKelas(kelas: 4 | 5 | 6): Promise<Tugas[]> {
   const { data, error } = await supabase
     .from("tugas")
@@ -65,6 +51,34 @@ export async function getTugasByKelas(kelas: 4 | 5 | 6): Promise<Tugas[]> {
 
   if (error) {
     console.error("Gagal mengambil tugas:", error.message)
+    return []
+  }
+
+  return data ?? []
+}
+export async function getSoalUTSByKelas(kelas: 4 | 5 | 6): Promise<SoalUTS[]> {
+  const { data, error } = await supabase
+    .from("soal_uts")
+    .select("*")
+    .eq("kelas", kelas)
+    .order("nomor", { ascending: true })
+
+  if (error) {
+    console.error("Gagal mengambil soal UTS:", error.message)
+    return []
+  }
+
+  return data ?? []
+}
+export async function getHasilUTSByKelas(kelas: 4 | 5 | 6): Promise<HasilUTS[]> {
+  const { data, error } = await supabase
+    .from("hasil_uts")
+    .select("*")
+    .eq("kelas", kelas)
+    .order("created_at", { ascending: false })
+
+  if (error) {
+    console.error("Gagal mengambil hasil UTS:", error.message)
     return []
   }
 

@@ -61,6 +61,28 @@ Buka http://localhost:3000
 
 Materi otomatis muncul di halaman `/kelas/4`, `/kelas/5`, atau `/kelas/6` — tidak perlu redeploy.
 
+## UTS Online (`/uts`) — 100% gratis, tanpa biaya AI
+
+Siswa mengerjakan UTS pilihan ganda langsung di HP/laptop, seperti fitur "Latihan Soal"
+yang sudah ada, tapi terpisah supaya soal UTS resmi tidak tercampur soal latihan biasa.
+Nilai dihitung otomatis oleh sistem (cocokkan pilihan siswa dengan jawaban benar) —
+**tidak butuh AI, tidak ada biaya per pemakaian**, murni Supabase yang sudah gratis.
+
+Alurnya:
+
+1. **Guru**: buka `/guru/kelola-soal-uts` → susun soal pilihan ganda per kelas (pertanyaan,
+   4 pilihan, jawaban benar)
+2. **Siswa**: buka `/uts` → pilih kelas → login pakai NISN (password = NISN, sama seperti
+   absen) → kerjakan soal satu per satu → nilai otomatis muncul & tersimpan. Setiap siswa
+   hanya bisa mengerjakan **satu kali** (kalau perlu mengulang, guru bisa hapus baris
+   nilainya di halaman rekap)
+3. **Guru**: buka `/guru/rekap-uts` → lihat rekap nilai semua siswa per kelas beserta
+   rata-ratanya
+
+Setup: jalankan `supabase/uts.sql` di Supabase Dashboard > SQL Editor (bikin tabel
+`soal_uts` dan `hasil_uts`). Tidak perlu Storage bucket baru maupun Environment Variable
+tambahan.
+
 ## Struktur penting
 
 ```
