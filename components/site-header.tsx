@@ -12,7 +12,7 @@ const navItems = [
   { label: "UTS", href: "/uts" },
   { label: "Game", href: "/game" },
   { label: "Info", href: "#info" },
-  { label: "Untuk Guru", href: "/guru/rekap-absensi" },
+  { label: "Admin", href: "/guru/rekap-absensi" },
 ]
 
 export function SiteHeader() {
@@ -61,7 +61,7 @@ export function SiteHeader() {
           <a href="#profil-guru">
             <button className="inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-blue/25 transition-transform hover:-translate-y-0.5 hover:bg-brand-blue-dark">
               <UserRound className="h-[18px] w-[18px]" />
-              Profil Guru
+              Profil Admin
             </button>
           </a>
         </div>
@@ -97,7 +97,7 @@ export function SiteHeader() {
           <a href="#profil-guru" onClick={() => setMenuTerbuka(false)}>
             <button className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white">
               <UserRound className="h-[18px] w-[18px]" />
-              Profil Guru
+              Profil Admin
             </button>
           </a>
         </div>
