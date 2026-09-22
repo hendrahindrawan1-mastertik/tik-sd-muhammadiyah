@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Menu, X, UserRound } from "lucide-react"
+import { Menu, X, Atom } from "lucide-react"
 
 const navItems = [
   { label: "Beranda", href: "#beranda", active: true },
@@ -58,10 +58,10 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden xl:block">
-          <a href="#profil-guru">
+          <a href="/stem">
             <button className="inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-blue/25 transition-transform hover:-translate-y-0.5 hover:bg-brand-blue-dark">
-              <UserRound className="h-[18px] w-[18px]" />
-              Profil Admin
+              <Atom className="h-[18px] w-[18px]" />
+              STEM
             </button>
           </a>
         </div>
@@ -94,10 +94,10 @@ export function SiteHeader() {
               </li>
             ))}
           </ul>
-          <a href="#profil-guru" onClick={() => setMenuTerbuka(false)}>
+          <a href="/stem" onClick={() => setMenuTerbuka(false)}>
             <button className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white">
-              <UserRound className="h-[18px] w-[18px]" />
-              Profil Admin
+              <Atom className="h-[18px] w-[18px]" />
+              STEM
             </button>
           </a>
         </div>
