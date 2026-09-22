@@ -1,4 +1,4 @@
-import { BookOpen, Play, Pencil, Gamepad2, ShieldCheck } from "lucide-react"
+import { BookOpen, Play, Pencil, Gamepad2, ShieldCheck, Heart } from "lucide-react"
 
 const features = [
   {
@@ -31,6 +31,13 @@ const features = [
     title: "Aman & Terpercaya",
     desc: "Konten aman, positif, dan sesuai untuk siswa SD.",
   },
+  {
+    icon: Heart,
+    iconClass: "bg-brand-red",
+    title: "Jujur & Hebat di Dunia Digital",
+    desc: "Belajar jadi anak yang jujur, bertanggung jawab, dan suka menjaga fasilitas sekolah.",
+    href: "/sikap-digital",
+  },
 ]
 
 export function WhySection() {
@@ -43,11 +50,8 @@ export function WhySection() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {features.map((feature) => {
             const Icon = feature.icon
-            return (
-              <div
-                key={feature.title}
-                className="flex items-start gap-3.5 rounded-2xl border border-border bg-slate-50 p-4"
-              >
+            const content = (
+              <>
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white ${feature.iconClass}`}
                 >
@@ -57,6 +61,22 @@ export function WhySection() {
                   <h5 className="mb-1 text-base font-bold">{feature.title}</h5>
                   <p className="text-sm leading-snug text-brand-muted">{feature.desc}</p>
                 </div>
+              </>
+            )
+            const className =
+              "flex items-start gap-3.5 rounded-2xl border border-border bg-slate-50 p-4"
+
+            if ("href" in feature && feature.href) {
+              return (
+                <a key={feature.title} href={feature.href} className={`${className} transition-colors hover:bg-slate-100`}>
+                  {content}
+                </a>
+              )
+            }
+
+            return (
+              <div key={feature.title} className={className}>
+                {content}
               </div>
             )
           })}
