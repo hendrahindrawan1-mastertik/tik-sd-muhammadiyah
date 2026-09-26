@@ -46,7 +46,7 @@ export default function GamePage() {
         </div>
 
         <h3 className="mb-4 text-xl font-bold text-brand-ink">🔤 Susun Kata</h3>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="mb-12 grid gap-6 md:grid-cols-3">
           {kelasList.map((item) => (
             <div
               key={item.level}
@@ -55,6 +55,25 @@ export default function GamePage() {
               <h3 className={`text-2xl font-extrabold ${item.titleClass}`}>Kelas {item.level}</h3>
               <p className="text-sm text-brand-muted">Susun huruf acak jadi istilah TIK</p>
               <a href={`/game/susun-kata/${item.level}`}>
+                <button className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 ${item.buttonClass}`}>
+                  Main Sekarang
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mb-4 text-xl font-bold text-brand-ink">🎯 Seret &amp; Taruh</h3>
+        <div className="grid gap-6 md:grid-cols-3">
+          {kelasList.map((item) => (
+            <div
+              key={item.level}
+              className={`flex flex-col items-start gap-3 rounded-3xl border p-7 ${item.cardClass}`}
+            >
+              <h3 className={`text-2xl font-extrabold ${item.titleClass}`}>Kelas {item.level}</h3>
+              <p className="text-sm text-brand-muted">Seret item ke kategori yang benar</p>
+              <a href={`/game/seret-gambar/${item.level}`}>
                 <button className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 ${item.buttonClass}`}>
                   Main Sekarang
                   <ArrowRight className="h-4 w-4" />
