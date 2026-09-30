@@ -6,6 +6,9 @@ import { RotateCcw, Trophy } from "lucide-react"
 type Item = { id: string; label: string; emoji: string; kategori: string }
 type Kategori = { nama: string; warna: string }
 
+// Jumlah item yang diambil (acak) dari tiap kategori setiap kali "Main Lagi"
+const JUMLAH_PER_KATEGORI: Record<4 | 5 | 6, number> = { 4: 4, 5: 3, 6: 3 }
+
 const DATA: Record<
   4 | 5 | 6,
   { kategori: Kategori[]; item: Item[] }
@@ -20,10 +23,18 @@ const DATA: Record<
       { id: "keyboard", label: "Keyboard", emoji: "⌨️", kategori: "Hardware" },
       { id: "monitor", label: "Monitor", emoji: "🖥️", kategori: "Hardware" },
       { id: "printer", label: "Printer", emoji: "🖨️", kategori: "Hardware" },
+      { id: "speaker-hw", label: "Speaker", emoji: "🔊", kategori: "Hardware" },
+      { id: "cpu", label: "CPU", emoji: "🧠", kategori: "Hardware" },
+      { id: "scanner", label: "Scanner", emoji: "📠", kategori: "Hardware" },
+      { id: "webcam", label: "Webcam", emoji: "📷", kategori: "Hardware" },
       { id: "word", label: "Microsoft Word", emoji: "📝", kategori: "Software" },
       { id: "game", label: "Aplikasi Game", emoji: "🎮", kategori: "Software" },
       { id: "browser", label: "Browser", emoji: "🌐", kategori: "Software" },
       { id: "kalkulator", label: "Kalkulator", emoji: "🧮", kategori: "Software" },
+      { id: "paint", label: "Paint", emoji: "🎨", kategori: "Software" },
+      { id: "musik", label: "Pemutar Musik", emoji: "🎵", kategori: "Software" },
+      { id: "kalender", label: "Kalender", emoji: "📅", kategori: "Software" },
+      { id: "kamera-app", label: "Aplikasi Kamera", emoji: "📸", kategori: "Software" },
     ],
   },
   5: {
@@ -36,12 +47,19 @@ const DATA: Record<
       { id: "keyboard", label: "Keyboard", emoji: "⌨️", kategori: "Input" },
       { id: "mouse", label: "Mouse", emoji: "🖱️", kategori: "Input" },
       { id: "mikrofon", label: "Mikrofon", emoji: "🎤", kategori: "Input" },
+      { id: "scanner", label: "Scanner", emoji: "📠", kategori: "Input" },
+      { id: "kamera", label: "Kamera", emoji: "📷", kategori: "Input" },
+      { id: "joystick", label: "Joystick", emoji: "🕹️", kategori: "Input" },
       { id: "cpu", label: "CPU", emoji: "🧠", kategori: "Proses" },
       { id: "ram", label: "RAM", emoji: "💾", kategori: "Proses" },
       { id: "motherboard", label: "Motherboard", emoji: "🔌", kategori: "Proses" },
+      { id: "processor", label: "Processor", emoji: "⚙️", kategori: "Proses" },
+      { id: "vga", label: "Kartu Grafis", emoji: "🎛️", kategori: "Proses" },
       { id: "monitor", label: "Monitor", emoji: "🖥️", kategori: "Output" },
       { id: "printer", label: "Printer", emoji: "🖨️", kategori: "Output" },
       { id: "speaker", label: "Speaker", emoji: "🔊", kategori: "Output" },
+      { id: "proyektor", label: "Proyektor", emoji: "📽️", kategori: "Output" },
+      { id: "headphone", label: "Headphone", emoji: "🎧", kategori: "Output" },
     ],
   },
   6: {
@@ -54,12 +72,19 @@ const DATA: Record<
       { id: "monitor", label: "Monitor", emoji: "🖥️", kategori: "Hardware" },
       { id: "keyboard", label: "Keyboard", emoji: "⌨️", kategori: "Hardware" },
       { id: "printer", label: "Printer", emoji: "🖨️", kategori: "Hardware" },
+      { id: "mouse", label: "Mouse", emoji: "🖱️", kategori: "Hardware" },
+      { id: "harddisk", label: "Harddisk", emoji: "💽", kategori: "Hardware" },
+      { id: "flashdisk", label: "Flashdisk", emoji: "🔌", kategori: "Hardware" },
       { id: "os", label: "Sistem Operasi", emoji: "💻", kategori: "Software" },
       { id: "antivirus", label: "Antivirus", emoji: "🛡️", kategori: "Software" },
       { id: "editor", label: "Aplikasi Edit Foto", emoji: "🖼️", kategori: "Software" },
+      { id: "browser", label: "Browser", emoji: "🌐", kategori: "Software" },
+      { id: "chat", label: "Aplikasi Chat", emoji: "💬", kategori: "Software" },
       { id: "router", label: "Router", emoji: "📶", kategori: "Jaringan" },
       { id: "kabel", label: "Kabel LAN", emoji: "🔗", kategori: "Jaringan" },
       { id: "server", label: "Server", emoji: "🗄️", kategori: "Jaringan" },
+      { id: "modem", label: "Modem", emoji: "📡", kategori: "Jaringan" },
+      { id: "switch", label: "Switch", emoji: "🔀", kategori: "Jaringan" },
     ],
   },
 }
@@ -75,6 +100,7 @@ function acak<T>(arr: T[]): T[] {
 
 export function SeretGambarClient({ kelas }: { kelas: 4 | 5 | 6 }) {
   const { kategori, item: bankItem } = DATA[kelas]
+  const jumlahPerKategori = JUMLAH_PER_KATEGORI[kelas]
 
   const [siap, setSiap] = useState(false)
   const [pool, setPool] = useState<Item[]>([])
@@ -83,20 +109,32 @@ export function SeretGambarClient({ kelas }: { kelas: 4 | 5 | 6 }) {
   const [sedangDiseret, setSedangDiseret] = useState<Item | null>(null)
   const [posisi, setPosisi] = useState({ x: 0, y: 0 })
   const [binAktif, setBinAktif] = useState<string | null>(null)
+  const [totalItem, setTotalItem] = useState(0)
 
   const binRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const offset = useRef({ x: 0, y: 0 })
 
+  const pilihRondeAcak = () => {
+    const terpilih: Item[] = []
+    for (const k of kategori) {
+      const bankKategori = bankItem.filter((it) => it.kategori === k.nama)
+      const ambil = Math.min(jumlahPerKategori, bankKategori.length)
+      terpilih.push(...acak(bankKategori).slice(0, ambil))
+    }
+    return acak(terpilih)
+  }
+
   const mulai = () => {
-    setPool(acak(bankItem))
+    const ronde = pilihRondeAcak()
+    setPool(ronde)
+    setTotalItem(ronde.length)
     setSelesai({})
     setSalahCount(0)
     setSiap(true)
   }
 
   const totalSelesai = Object.keys(selesai).length
-  const totalItem = bankItem.length
-  const semuaSelesai = siap && totalSelesai === totalItem
+  const semuaSelesai = siap && totalItem > 0 && totalSelesai === totalItem
 
   const cariBinDiTitik = (x: number, y: number): string | null => {
     for (const nama of Object.keys(binRefs.current)) {
