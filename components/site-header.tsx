@@ -1,22 +1,33 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X, Atom } from "lucide-react"
 
+// href diawali "/" supaya menu berfungsi dari halaman mana pun.
+// "match" = awal alamat halaman yang membuat menu tampil aktif (bergaris bawah).
 const navItems = [
-  { label: "Beranda", href: "#beranda", active: true },
-  { label: "Materi", href: "#materi" },
-  { label: "Tugas", href: "/tugas" },
-  { label: "Video", href: "/video" },
-  { label: "Soal", href: "/soal" },
-  { label: "UTS", href: "/uts" },
-  { label: "Game", href: "/game" },
-  { label: "Info", href: "#info" },
-  { label: "Admin", href: "/guru/rekap-absensi" },
+  { label: "Beranda", href: "/", match: "/", exact: true },
+  { label: "Materi", href: "/#materi" },
+  { label: "Tugas", href: "/tugas", match: "/tugas" },
+  { label: "Video", href: "/video", match: "/video" },
+  { label: "Soal", href: "/soal", match: "/soal" },
+  { label: "UTS", href: "/uts", match: "/uts" },
+  { label: "Game", href: "/game", match: "/game" },
+  { label: "Info", href: "/#info" },
+  { label: "Admin", href: "/guru/rekap-absensi", match: "/guru" },
 ]
 
 export function SiteHeader() {
   const [menuTerbuka, setMenuTerbuka] = useState(false)
+  const pathname = usePathname()
+
+  const aktif = (item: (typeof navItems)[number]) => {
+    if (!item.match) return false
+    if (item.exact) return pathname === item.match
+    return pathname === item.match || pathname.startsWith(item.match + "/")
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card">
@@ -42,28 +53,29 @@ export function SiteHeader() {
           <ul className="flex items-center gap-7">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
+                <Link
                   href={item.href}
                   className={
-                    item.active
+                    aktif(item)
                       ? "border-b-[3px] border-brand-blue pb-1.5 text-base font-bold text-brand-blue"
                       : "pb-1.5 text-base font-medium text-slate-700 transition-colors hover:text-brand-blue"
                   }
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
 
         <div className="hidden xl:block">
-          <a href="/stem">
-            <button className="inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-blue/25 transition-transform hover:-translate-y-0.5 hover:bg-brand-blue-dark">
-              <Atom className="h-[18px] w-[18px]" />
-              STEM
-            </button>
-          </a>
+          <Link
+            href="/stem"
+            className="inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-blue/25 transition-transform hover:-translate-y-0.5 hover:bg-brand-blue-dark"
+          >
+            <Atom className="h-[18px] w-[18px]" />
+            STEM
+          </Link>
         </div>
 
         <button
@@ -80,26 +92,28 @@ export function SiteHeader() {
           <ul className="flex flex-col gap-1">
             {navItems.map((item) => (
               <li key={item.label}>
-                <a
+                <Link
                   href={item.href}
                   onClick={() => setMenuTerbuka(false)}
                   className={
-                    item.active
+                    aktif(item)
                       ? "block rounded-lg bg-[#eef4ff] px-3 py-2.5 text-base font-bold text-brand-blue"
                       : "block rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-50"
                   }
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <a href="/stem" onClick={() => setMenuTerbuka(false)}>
-            <button className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white">
-              <Atom className="h-[18px] w-[18px]" />
-              STEM
-            </button>
-          </a>
+          <Link
+            href="/stem"
+            onClick={() => setMenuTerbuka(false)}
+            className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-blue px-5 py-3 text-sm font-semibold text-white"
+          >
+            <Atom className="h-[18px] w-[18px]" />
+            STEM
+          </Link>
         </div>
       )}
     </header>
